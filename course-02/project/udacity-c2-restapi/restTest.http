@@ -1,0 +1,132 @@
+
+@host_local = localhost:8080
+@host_aws = udacity-c2-restapi-dev222.us-east-1.elasticbeanstalk.com
+
+# @host = {{host_local}}
+@host = {{host_aws}}
+
+GET http://{{host}}
+Content-Type: application/json
+###
+
+GET http://{{host}}/api/v0
+
+###
+GET http://{{host}}/api/v0/users/luke@email.local
+Content-Type: application/json
+# Authorization: Bearer 
+###
+
+POST http://{{host}}/api/v0/users/auth
+Content-Type: application/json
+
+{
+    "email": "luke@email.local",
+    "plainTextPassword": "1234"
+}
+
+###
+# BEGIN http://localhost:8080/api/v0/users/auth
+# throw error if user already exists
+POST http://{{host}}/api/v0/users/auth
+Content-Type: application/json
+
+{
+    "email": "luke2@email.local",
+    "plainTextPassword": "1234"
+}
+
+###
+# throw error if email not found
+POST http://{{host}}/api/v0/users/auth
+Content-Type: application/json
+
+{
+    "email": "",
+    "plainTextPassword": "1234"
+}
+
+###
+# throw error if plainTextPassword not found
+POST http://{{host}}/api/v0/users/auth
+Content-Type: application/json
+
+{
+    "email": "luke@email.local"
+}
+
+# END http://localhost:8080/api/v0/users/auth
+
+###
+
+###
+# BEGIN BEGIN http://localhost:8080/api/v0/users/auth
+POST http://{{host}}/api/v0/users/auth/login
+Content-Type: application/json
+
+{
+    "email": "luke2@email.local",
+    "password": "1234"
+}
+
+###
+
+# BEGIN BEGIN http://localhost:8080/api/v0/users/auth
+# throw error if email is not found or invalid
+POST http://{{host}}/api/v0/users/auth/login
+Content-Type: application/json
+
+{
+    "email": "",
+    "password": "1234"
+}
+
+###
+# throw error if password is empty
+POST http://{{host}}/api/v0/users/auth/login
+Content-Type: application/json
+
+{
+    "email": "luke@email.local",
+    "password": ""
+}
+
+###
+# throw error if password is incorrect
+POST http://{{host}}/api/v0/users/auth/login
+Content-Type: application/json
+
+{
+    "email": "luke@email.local",
+    "password": "1"
+}
+
+###
+# successful login 
+POST http://{{host}}/api/v0/users/auth/login
+Content-Type: application/json
+
+{
+    "email": "luke@email.local",
+    "password": "1234"
+}
+
+# BEGIN BEGIN http://localhost:8080/api/v0/users/auth
+###
+
+GET http://{{host}}/api/v0/feed/signed-url/cat01.jpeg
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1a2UyQGVtYWlsLmxvY2FsIiwicGFzc3dvcmRfaGFzaCI6IiQyYiQxMCQvRnlBQ0J6VFVLMkNYLzVwME9MQ3F1WnF2SFF2aXBuVllPdWJKY1EweVhScE5lT2ZveHVQZSIsImNyZWF0ZWRBdCI6IjIwMjItMDQtMzBUMTY6NDk6NDEuNzAyWiIsInVwZGF0ZWRBdCI6IjIwMjItMDQtMzBUMTY6NDk6NDEuNzAzWiIsImlhdCI6MTY1MTM0MjQ2Mn0.nfw52ZC5m8UShBfYWofkSfanOFs2cX9cthORAuyht4o
+
+###
+# PUT https://udagram-183844933110-dev.s3.amazonaws.com/cat01.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASVTQDBX3LB4RMDDU%2F20220421%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220421T030857Z&X-Amz-Expires=300&X-Amz-Signature=ea77763b3660829f5a0b342c282275a0a4459d8efe5e66c1f1fce5486b2bc136&X-Amz-SignedHeaders=hostContent-Type: image/jpeg
+# Content-Type: image/jpeg
+
+# < /Users/lukelee/Downloads/cat01.jpeg
+###
+
+GET http://{{host}}/api/v0/feed/cat01.jpeg
+Content-Type: image/jpeg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1a2VAZW1haWwubG9jYWwiLCJwYXNzd29yZF9oYXNoIjoiJDJiJDEwJGwyeko0N21SLlZ5R1B5QkZyOEk4bE9Fb0lqL0RzVUNEdUFVNGYzM0g4Z1loZndsM045NmFxIiwiY3JlYXRlZEF0IjoiMjAyMi0wNC0yOVQwMzo0MjowMi45OTVaIiwidXBkYXRlZEF0IjoiMjAyMi0wNC0yOVQwMzo0MjowMi45OTZaIiwiaWF0IjoxNjUxMzUwODQyfQ.ao9YgGcQEFuyA5ZV-bdLQGQtlOOv9aeYw2HEy56ZzlY
+
+###
