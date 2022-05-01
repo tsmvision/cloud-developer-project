@@ -1,0 +1,18 @@
+###
+GET http://localhost:8082
+###
+
+GET http://localhost:8082/filteredimage?image_url=https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80
+###
+
+GET http://localhost:8082/filteredimage?image_url=https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg
+
+###
+
+GET http://localhost:8082/filteredimage?image_url=https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg
+###
+GET http://localhost:8082/filteredimage?image_url=https://media.istockphoto.com/photos/kitten-with-his-paw-up-picture-id149052633
+
+###
+GET http://localhost:8082/filteredimage
+Content-Type: application/json
