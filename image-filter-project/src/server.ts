@@ -1,4 +1,5 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import { ParsedUrlQuery } from 'querystring';
 import {filterImageFromURL, deleteLocalFiles, flushFilesInOutpathDirectory} from './util/util';
 
 (async () => {
@@ -29,15 +30,16 @@ import {filterImageFromURL, deleteLocalFiles, flushFilesInOutpathDirectory} from
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", async (req: Request, res: Response) => {
     try {
-    
-      if (!req.query.image_url) {
+
+      const { image_url }  = req.query;
+      
+      if (!image_url) {
         return res.status(400).send({message: "image_url not existing"});
       }
-
-      const imageUrl = String(req.query.image_url);
-      const fileUrl = await filterImageFromURL(imageUrl);
+      
+      const fileUrl = await filterImageFromURL(String(image_url));
 
       if (!fileUrl) {
         return res.status(500).send({message: "process not completed"});
